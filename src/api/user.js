@@ -10,8 +10,19 @@ const login = (data) => {
     method: 'post'
   })
 }
-
+const getUserInfo = () => {
+  return request({ url: '/user/info', method: 'get' })
+}
+const logout = () => {
+  return request({ url: '/logout', method: 'POST' })
+}
+const getMenuNav = () => {
+  return request({ url: '/menu/nav', method: 'GET' })
+}
 export default {
   getCaptcha,
-  login
+  login,
+  getUserInfo,
+  logout,
+  getMenuNav
 }

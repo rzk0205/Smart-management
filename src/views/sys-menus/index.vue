@@ -1,12 +1,12 @@
 <template>
-  <div>
-    main
-    <router-view></router-view>
-  </div>
+  <div>菜单管理</div>
 </template>
 <script>
 export default {
-  name: 'index'
+  data() {
+    return {}
+  },
+  created() {}
 }
 </script>
 <style lang="scss" scoped></style>

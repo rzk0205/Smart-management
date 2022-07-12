@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import store from '@/store'
 import { Message } from 'element-ui'
 const exceptionMessage = {
   1: '系统异常',
@@ -13,6 +13,8 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
+    const token = store.getters.token
+    if (token) config.headers.token = token
     return config
   },
   (error) => {

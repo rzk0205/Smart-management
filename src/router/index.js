@@ -5,9 +5,56 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/login',
     name: 'login',
-    component: () => import('../views/login')
+    path: '/login',
+    component: () => import('@/views/login/index.vue')
+  },
+  {
+    name: 'layout',
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    redirect: '/',
+    children: [
+      {
+        name: 'index',
+        path: '/',
+        component: () => import('@/views/index/index.vue')
+      }
+    ]
+  },
+  {
+    name: 'manager',
+    path: '/sys',
+    component: () => import('../layout'),
+    meta: {
+      title: '系统管理'
+    },
+    children: [
+      {
+        name: 'sys-users',
+        path: '/sys/users',
+        meta: {
+          title: '用户管理'
+        },
+        component: () => import('../views/sys-users')
+      },
+      {
+        name: 'sys-roles',
+        path: '/sys/roles',
+        meta: {
+          title: '角色管理'
+        },
+        component: () => import('../views/sys-roles')
+      },
+      {
+        name: 'sys-menus',
+        path: '/sys/menus',
+        meta: {
+          title: '菜单管理'
+        },
+        component: () => import('../views/sys-menus')
+      }
+    ]
   }
 ]
 

@@ -1,10 +1,12 @@
 import router from './router'
 import store from './store'
+import { Message } from 'element-ui'
 const whitelList = ['/login']
 router.beforeEach(async (to, from, next) => {
   const token = store.getters.token
   if (token) {
     if (to.path === '/login') {
+      Message('请勿重复登录')
       next(from.path)
     } else {
       const userInfo = store.getters.userInfo

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="left">left</div>
+    <div class="left">
+      <TagsView></TagsView>
+    </div>
     <div class="right">
       <div class="avatarImg">
         <el-avatar :size="40" :src="userInfo.avatar" />
@@ -21,12 +23,16 @@
   </div>
 </template>
 <script>
+import TagsView from '../../components/TagsView.vue'
 export default {
   name: 'index',
   computed: {
     userInfo() {
       return this.$store.getters.userInfo
     }
+  },
+  components: {
+    TagsView
   },
   methods: {
     handleCommand(command) {

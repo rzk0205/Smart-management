@@ -5,6 +5,9 @@
       text-color="#fff"
       active-text-color="#ffd04b"
       background-color="#222d32"
+      :collapse="isCollapse"
+      :collapse-transition="false"
+      :style="{ width: $store.getters.isCollapse ? '60px' : '200px' }"
       router
     >
       <AsideMenus
@@ -47,6 +50,9 @@ export default {
   computed: {
     menus() {
       return this.$store.getters.menus
+    },
+    isCollapse() {
+      return this.$store.getters.isCollapse
     }
   },
   components: { AsideMenus }
@@ -57,5 +63,8 @@ export default {
 .el-menu {
   background-color: $aside-bg-color;
   border-right: none;
+}
+.aside-container {
+  width: auto;
 }
 </style>

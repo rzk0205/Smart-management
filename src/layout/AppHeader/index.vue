@@ -1,9 +1,35 @@
 <template>
   <div>
     <div class="left">
-      <TagsView></TagsView>
+      <el-button
+        @click="handleCollapseMenu"
+        size="mini"
+        type="text"
+        :icon="
+          $store.getters.isCollapse ? 'el-icon-s-fold' : 'el-icon-s-unfold'
+        "
+      ></el-button>
+      <div class="tags-view">
+        <TagsView></TagsView>
+      </div>
     </div>
     <div class="right">
+      <div class="right-tool-tip">
+        <el-tooltip
+          class="full"
+          effect="dark"
+          content="全屏"
+          placement="bottom"
+        >
+          <i class="el-icon-rank hand white" style="font-size: 25px"></i>
+        </el-tooltip>
+        <el-tooltip effect="dark" content="关闭全部标签" placement="bottom">
+          <i
+            class="el-icon-circle-close hand white"
+            style="font-size: 25px"
+          ></i>
+        </el-tooltip>
+      </div>
       <div class="avatarImg">
         <el-avatar :size="40" :src="userInfo.avatar" />
       </div>
@@ -46,11 +72,11 @@ export default {
       }
     },
     handleToHome() {
-      this.$router.push('/')
+      alert('个人设置')
     },
     handleLogout() {
       try {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        this.$confirm('你确定要退出登陆吗?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
@@ -73,6 +99,9 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    handleCollapseMenu() {
+      this.$store.dispatch('menu/setCollapse')
     }
   }
 }
@@ -80,16 +109,52 @@ export default {
 <style lang="scss" scoped>
 .left {
   float: left;
-}
-.right {
-  float: right;
   display: flex;
-  height: 60px;
+  align-items: center;
+
+  .el-button {
+    font-size: 25px;
+    color: #fff;
+  }
 }
+// .right {
+//   display: flex;
+//   height: 60px;
+// }
 .avatarImg {
   height: 60px;
   width: 45px;
   padding-top: 10px;
   box-sizing: border-box;
+}
+.right {
+  float: right;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  .right-tool-tip {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    .full {
+      margin-right: 20px;
+      // 旋转
+      transform: rotate(20deg);
+      -webkit-transform: rotate(20deg);
+      /*兼容-webkit-引擎浏览器*/
+      -moz-transform: rotate(20deg);
+      /*兼容-moz-引擎浏览器*/
+    }
+  }
+
+  .el-dropdown {
+    margin-left: 15px;
+    height: 100%;
+    .el-dropdown-link {
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
 }
 </style>

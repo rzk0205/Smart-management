@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="auto">
       <AppAside></AppAside>
     </el-aside>
     <el-container>

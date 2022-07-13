@@ -6,6 +6,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './style/reset.scss'
 import './permission'
+import Fragment from 'vue-fragment'
+Vue.use(Fragment.Plugin)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 new Vue({

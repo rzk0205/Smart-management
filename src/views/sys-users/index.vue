@@ -129,7 +129,8 @@ export default {
       input3: '',
       tableList: {
         current: '1',
-        size: '10'
+        size: '10',
+        username: ''
       },
       list: [],
       loading: false,

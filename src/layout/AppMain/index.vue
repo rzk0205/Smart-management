@@ -8,12 +8,13 @@
   </div>
 </template>
 <script>
+// import Breadcrumb from '@/components/Breadcrumb.vue'
 export default {
   name: 'index',
-
-  created() {
-    // console.log(this.$route.matched)
-  }
+  // components: {
+  //   Breadcrumb
+  // },
+  created() {}
 }
 </script>
 <style lang="scss" scoped>

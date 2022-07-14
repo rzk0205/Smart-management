@@ -1,7 +1,7 @@
 <template>
   <div class="aside-container">
     <el-menu
-      default-active="0"
+      :default-active="activePath"
       text-color="#fff"
       active-text-color="#ffd04b"
       background-color="#222d32"
@@ -53,6 +53,9 @@ export default {
     },
     isCollapse() {
       return this.$store.getters.isCollapse
+    },
+    activePath() {
+      return this.$route.path
     }
   },
   components: { AsideMenus }

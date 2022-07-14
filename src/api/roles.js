@@ -6,5 +6,11 @@ const getRoleList = (data) => {
     method: 'get'
   })
 }
-
-export default { getRoleList }
+const updateRole = (id, data) => {
+  return request({
+    url: `/user/assign/${id}`,
+    method: 'POST',
+    data
+  })
+}
+export default { getRoleList, updateRole }

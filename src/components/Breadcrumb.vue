@@ -1,44 +1,67 @@
 <template>
-  <div class="main">
-    <el-breadcrumb
-      v-if="this.$route.path !== '/'"
-      separator-class="el-icon-arrow-right"
-    >
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item
-        :to="{ path: '/sys/users' }"
-        v-for="(item, index) in bread"
-        :key="index"
-        >{{ item.meta.title }}</el-breadcrumb-item
-      >
+  <div class="breadcrumb-container">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <template v-if="$route.path === '/index'">
+        <el-breadcrumb-item
+          ><span class="active">控制台</span></el-breadcrumb-item
+        >
+      </template>
+      <template v-else>
+        <el-breadcrumb-item
+          :to="index <= breadcrumbList.length - 1 ? item.path : ''"
+          v-for="(item, index) in breadcrumbList"
+          :key="index"
+        >
+          {{ item.title }}
+        </el-breadcrumb-item>
+      </template>
     </el-breadcrumb>
-    <el-divider></el-divider>
-    <div class="container">
-      <router-view></router-view>
-    </div>
   </div>
 </template>
+
 <script>
 export default {
-  name: 'index',
+  name: 'BreadCrumb',
   data() {
-    return {}
+    return {
+      breadcrumbList: []
+    }
   },
-  methods: {},
-  computed: {
-    bread() {
-      return this.$route.matched
+  watch: {
+    $route: {
+      handler(newVal, oldVal) {
+        this.handleGetBreadcrumbList()
+      },
+      immediate: true,
+      deep: true
+    }
+  },
+  methods: {
+    handleGetBreadcrumbList() {
+      const breadcrumbList = [{ title: '首页', path: '/index' }]
+      const routeList = this.$route.matched
+      routeList.forEach((item) => {
+        if (item.meta.title) {
+          breadcrumbList.push({
+            title: item.meta.title,
+            path: item.path
+          })
+        }
+      })
+      console.log(breadcrumbList)
+      this.breadcrumbList = breadcrumbList
     }
   }
 }
 </script>
-<style scoped lang="scss">
-.main {
-  background-color: #fff;
+
+<style scoped>
+.active {
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
 }
-.el-breadcrumb {
-  padding: 20px 20px 0 20px;
+.breadcrumb-container {
+  margin-bottom: 15px;
 }
-.container {
-  padding: 0 20px 20px 20px;
-}
+</style>

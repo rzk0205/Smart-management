@@ -229,6 +229,8 @@ export default {
         size: 10,
         username: ''
       },
+      // current: 1,
+      // size: 10,
       // 后台返回的页面数据
       list: [],
       EditStatus: false,
@@ -246,7 +248,7 @@ export default {
         username: '',
         password: '',
         email: '',
-        status: '1'
+        status: 1
       },
       editId: '',
       formLabelWidth: '70px',
@@ -357,8 +359,8 @@ export default {
      */
     async handleGetRoleList() {
       try {
-        const data = { current: this.current, size: this.size }
-        const response = await RoleApi.getRoleList(data)
+        // const data = { current: this.current, size: this.size }
+        const response = await RoleApi.getRoleList(this.tableList)
         this.roleList = response.records
         console.log(response)
       } catch (e) {
@@ -367,6 +369,7 @@ export default {
     },
     // 分配角色
     handleOpenRoleDialog(row) {
+      console.log(row)
       this.roleForm.roleId = []
       this.roleDialogFormVisible = true
       row.roles.forEach((item) => {

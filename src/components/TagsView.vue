@@ -1,90 +1,67 @@
 <template>
-  <div class="tagsView">
-    <ul class="tags-view-list">
-      <li
-        class="tags-view-item"
-        @click="handleSelectTag(item.path)"
-        :class="{ active: $route.path === item.path }"
-        v-for="(item, index) in tagsView"
-        :key="index"
-      >
-        {{ item.meta.title }}
-        <span v-if="!index == 0" @click.stop="handleCloseTag(item.path, index)"
-          >×</span
-        >
-      </li>
-    </ul>
+  <div class="tags-container">
+    <el-tag
+      @click="handleActiveTag(tag.path)"
+      @close="handleRemoveTag(index)"
+      class="hand"
+      v-for="(tag, index) in tags"
+      :key="tag.path"
+      size="medium"
+      :closable="tag.path !== '/index'"
+      :effect="$route.path === tag.path ? 'dark' : 'plain'"
+      type="warning"
+    >
+      {{ tag.title }}
+    </el-tag>
   </div>
 </template>
+
 <script>
-import { isTags } from '../utils/isTags'
 export default {
   name: 'TagsView',
-  data() {
-    return {}
-  },
-  methods: {
-    handleSelectTag(path) {
-      this.$router.push(path)
-    },
-    handleCloseTag(routepath, index) {
-      this.$store.commit('tagsView/removeTagItem', index)
-      const tagsView = this.$store.getters.tagsView
-      if (routepath === this.$route.path) {
-        const path = tagsView[index]
-          ? tagsView[index].path
-          : tagsView[tagsView.length - 1].path
-        this.$router.push(path)
-      }
-    }
-  },
   computed: {
-    tagsView() {
-      return this.$store.getters.tagsView
+    tags() {
+      return this.$store.getters.tags
     }
   },
   watch: {
     $route: {
-      handler(to, from) {
-        if (isTags(to.path)) return
-        const { meta, path } = to
-        this.$store.dispatch('tagsView/setTagsView', { meta, path })
+      handler(newVal, oldVal) {
+        this.handleAddTag()
       },
-      immediate: true
+      immediate: true,
+      deep: true
+    }
+  },
+  methods: {
+    handleAddTag() {
+      const path = this.$route.path
+      const title = this.$route.meta.title
+      const newTag = {
+        path,
+        title
+      }
+      this.$store.dispatch('tagsView/addTag', newTag)
+    },
+    handleRemoveTag(index) {
+      if (!index) return
+      this.$store.dispatch('tagsView/removeTag', index)
+      const path = this.tags[index - 1].path
+      this.$router.push(path)
+    },
+    handleActiveTag(path) {
+      this.$router.push(path)
     }
   }
 }
 </script>
-<style scoped lang="scss">
-.tagsView {
-  width: 100%;
-  overflow-x: auto;
-  .tags-view-list {
-    margin-bottom: 5px;
-    .tags-view-item {
-      display: inline-block;
-      position: relative;
-      cursor: pointer;
-      height: 26px;
-      line-height: 26px;
-      background: #fff;
-      border: 1px solid #e6a23c;
-      color: #e6a23c;
-      padding: 0 10px;
-      font-size: 12px;
-      margin-left: 10px;
-      border-radius: 5px;
-      &:first-of-type {
-        margin-left: 15px;
-      }
-      &:last-of-type {
-        margin-right: 15px;
-      }
-      &.active {
-        color: #fff;
-        background-color: #e6a23c;
-      }
-    }
+
+<style lang="scss" scoped>
+.tags-container {
+  margin-left: 10px;
+
+  .el-tag {
+    margin-right: 10px;
   }
 }
 </style>

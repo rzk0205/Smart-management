@@ -1,30 +1,40 @@
-import { setItem, getItem } from '../../utils/storage'
+/**
+ * @author YangLing
+ * @date 2022/7/13 17:08
+ */
+import { setItem, getItem } from '@/utils/storage'
 
 export default {
   namespaced: true,
   state: {
-    tagsView: getItem('tagsView') || [
-      { meta: { title: '控制台' }, path: '/index' }
-    ]
+    tags: getItem('tags') || [{ title: '控制台', path: '/index' }]
   },
   mutations: {
-    setTagsView(state, tagsView) {
-      const isFind = state.tagsView.find((item) => {
-        return item.path === tagsView.path
-      })
-      if (!isFind) {
-        state.tagsView.push(tagsView)
-        setItem('tagsView', state.tagsView)
+    addTag(state, tag) {
+      const hasTag = state.tags.find((item) => item.path === tag.path)
+      if (!hasTag) {
+        state.tags.push(tag)
+        setItem('tags', state.tags)
       }
     },
-    removeTagItem(state, index) {
-      state.tagsView.splice(index, 1)
-      setItem('tagsView', state.tagsView)
+    removeTag(state, index) {
+      state.tags.splice(index, 1)
+      setItem('tags', state.tags)
+    },
+    removeAllTag(state) {
+      state.tags = [{ title: '控制台', path: '/index' }]
+      setItem('tags', state.tags)
     }
   },
   actions: {
-    setTagsView({ commit }, payload) {
-      commit('setTagsView', payload)
+    addTag({ commit }, tag) {
+      commit('addTag', tag)
+    },
+    removeTag({ commit }, index) {
+      commit('removeTag', index)
+    },
+    removeAllTag({ commit }) {
+      commit('removeAllTag')
     }
   }
 }

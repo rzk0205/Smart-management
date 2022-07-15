@@ -3,6 +3,7 @@ const getters = {
   userInfo: (state) => state.user.userInfo,
   menus: (state) => state.user.menus,
   tagsView: (state) => state.tagsView.tagsView,
-  isCollapse: (state) => state.menu.collapse
+  isCollapse: (state) => state.menu.collapse,
+  tags: (state) => state.tagsView.tags
 }
 export default getters

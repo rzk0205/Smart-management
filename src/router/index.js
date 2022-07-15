@@ -13,12 +13,15 @@ const routes = [
     name: 'layout',
     path: '/',
     component: () => import('@/layout/index.vue'),
-    redirect: '/',
+    redirect: '/index',
     children: [
       {
         name: 'index',
-        path: '/',
-        component: () => import('@/views/index/index.vue')
+        path: '/index',
+        component: () => import('@/views/index/index.vue'),
+        meta: {
+          title: '控制台'
+        }
       }
     ]
   },

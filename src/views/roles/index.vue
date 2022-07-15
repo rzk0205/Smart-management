@@ -181,7 +181,7 @@
               ref="tree"
               node-key="id"
               default-expand-all
-              :default-checked-keys="rolesData.menuIds"
+              check-strictly
               :props="defaultProps"
             >
             </el-tree>
@@ -274,6 +274,7 @@ export default {
       this.dialogFormVisiblerole = true
       const res = await RolesApi.setRolesInfo(row.id)
       this.rolesData = res
+      this.$refs.tree.setCheckedKeys(this.rolesData.menuIds)
       console.log(this.rolesData)
       console.log(res)
     },

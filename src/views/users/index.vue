@@ -101,6 +101,7 @@
               handleEdit(scope.row.id)
               dialogFormVisible = true
             "
+            v-permission="'sys:user:update'"
             >编辑</el-button
           >
           <el-button
@@ -108,9 +109,16 @@
             size="mini"
             @click="handleOpenRoleDialog(scope.row)"
             plain
+            v-permission="'sys:user:assign'"
             >分配角色</el-button
           >
-          <el-button type="danger" size="mini" plain>删除</el-button>
+          <el-button
+            type="danger"
+            size="mini"
+            v-permission="'sys:user:del'"
+            plain
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>

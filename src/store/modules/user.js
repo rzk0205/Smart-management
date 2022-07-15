@@ -5,8 +5,8 @@ export default {
   state: {
     token: getItem('token') || '',
     userInfo: '',
-    authoritys: [],
-    menus: []
+    authoritys: '',
+    menus: ''
   },
   mutations: {
     setToken(state, token) {
@@ -44,6 +44,7 @@ export default {
       commit('setToken', '')
       commit('setUserInfo', '')
       removeItem('token')
+      removeItem('tags')
       // removeItem('userInfo')
       return response
     }
